@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40caffddd30d9c9418eaff7be2bdb910, type: 3}
+  m_Name: Book6
+  m_EditorClassIdentifier: Assembly-CSharp::SCO_
+  title: 'Chronicle of the Bright Years '
+  author: Arthur Castleton
+  ID: 5
+  pages: []
+  date: 12/03/1947
+  isBanned: 0
+  genre: 3
+  hasPropaganda: 0
+  hasHiddenMessage: 0
+  suspitionPercent: 0.09

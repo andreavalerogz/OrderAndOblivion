@@ -15,10 +15,11 @@ MonoBehaviour:
   title: The Lighthouse of the Three Tides
   author: Elena Marwick
   ID: 0
-  numPages: 0
-  date: 
+  pages:
+  - content: jiiiiiiiiiiiiiiiiiiiii
+  date: 10/09/1962
   isBanned: 0
   genre: 0
   hasPropaganda: 0
   hasHiddenMessage: 0
-  suspitionPercent: 0
+  suspitionPercent: 0.04

@@ -6,11 +6,9 @@ using UnityEngine;
 // SCRIPTABLE OBJECTS BOOKS ********************************+
 [CreateAssetMenu(fileName = "Book", menuName = "Scriptable Objects/Book")]
 
-public class SCO_ : ScriptableObject
+public class SO_Book : ScriptableObject
 {
-    public enum GENRES { Fantasy, Mystery, Horror, History, Romance, Comics, Children, Manuals, Biographies, Poetry, Cookbooks, ArtPhotography, Philosophy, SelfHelp, PhysicsChemestry };
-
-    Dictionary<GENRES, string> genreColors = new Dictionary<GENRES, string>
+    static Dictionary<GENRES, string> coverColors = new Dictionary<GENRES, string>
     {
         { GENRES.Fantasy, "Purple" },
         { GENRES.Mystery, "Dark Grey" },
@@ -30,10 +28,12 @@ public class SCO_ : ScriptableObject
     };
 
     public string title, author;
-    public int ID, numPages;
+    public int ID;
+    public List<D_Page> pages = new List<D_Page>();
     public string date; // datetime doesn't show up in the inspector, i'll convert it later on
     public bool isBanned;
     public GENRES genre;
     public bool hasPropaganda, hasHiddenMessage;
     public float suspitionPercent;
+    public string CoverColor => coverColors[genre];
 }
