@@ -1,9 +1,10 @@
-using UnityEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 
-public class S_PickDropBooks : MonoBehaviour
+public class S_PickDrop : MonoBehaviour
 {
     /* 
      what i need to pick up a book:
@@ -17,27 +18,33 @@ public class S_PickDropBooks : MonoBehaviour
     it doesnt have to be super fast (more tedious)
      */
 
+    LayerMask pickUpMask; // book layer
     [SerializeField] private float maxDistance = 10f;
 
     public Transform handPosition; // position we want the book to be when we pick it up
-    private Stack<GameObject> booksInHand = new Stack<GameObject>();
+    private Stack<S_BookInstance> booksInHand = new Stack<S_BookInstance>();
     [SerializeField] private float bookOffset = 0.002f;
     [SerializeField] private int carryBookCapacity = 3;
 
-    LayerMask bookMask;
+    public SO_Book topBookData;
+
+    // EVENTS
+    public event Action<SO_Book> onBookChanged; // EVENT if we change the book in hand!
+
+    
     void Awake()
     {
-        bookMask = LayerMask.GetMask("Book");
+        pickUpMask = LayerMask.GetMask("PickUps");
     }
     private void Update()
     {
         if (S_PlayerInputActions.instance.inputs.Player.Interact.WasPressedThisFrame()) // player presses E
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, maxDistance, bookMask))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, maxDistance, pickUpMask))
             {
                 Debug.Log("Did Hit");
-                if(booksInHand.Count < carryBookCapacity) PickUpBook(hit.collider.gameObject); // if he has less than the carry capacity, we pick it up
+                if(booksInHand.Count < carryBookCapacity) PickUpBook(hit.collider.gameObject.GetComponent<S_BookInstance>()); // if he has less than the carry capacity, we pick it up
             }
         }
         if (S_PlayerInputActions.instance.inputs.Player.Drop.WasPressedThisFrame())
@@ -49,7 +56,7 @@ public class S_PickDropBooks : MonoBehaviour
         }
 
     }
-    void PickUpBook(GameObject book)
+    void PickUpBook(S_BookInstance book)
     {
         book.GetComponent<Rigidbody>().isKinematic = true; // disable collisions and collider
         book.GetComponent<Collider>().enabled = false;
@@ -58,17 +65,28 @@ public class S_PickDropBooks : MonoBehaviour
         book.transform.localPosition = Vector3.up * (booksInHand.Count * bookOffset);
         book.transform.localRotation = Quaternion.identity;
         booksInHand.Push(book); // save it in the list
+
+        UpdateTopBook();
     }
 
 
-    void DropBook(GameObject book)
+    void DropBook(S_BookInstance book)
     {
         Debug.Log("Detaching Book: " + book);
         book.GetComponent<Rigidbody>().isKinematic = false; // enable collisions and collider
         book.GetComponent<Collider>().enabled = true;
         book.transform.parent = null; // un-parent
+
+        UpdateTopBook();
     }
 
+    void UpdateTopBook()
+    {
+        if (booksInHand.Count > 0) topBookData = booksInHand.Peek().bookData; // if he has a book -> we save the bookdata
+        else topBookData = null; // if he does not -> we save it as null
+
+        if (onBookChanged != null) onBookChanged(topBookData); // we call the event and we send the bookdata (if theres something subscribed to it)
+    }
 
 }
 
