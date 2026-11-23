@@ -18,9 +18,6 @@ public class S_PickDrop : MonoBehaviour
     it doesnt have to be super fast (more tedious)
      */
 
-    LayerMask pickUpMask; // book layer
-    [SerializeField] private float maxDistance = 10f;
-
     public Transform handPosition; // position we want the book to be when we pick it up
     private Stack<S_BookInstance> booksInHand = new Stack<S_BookInstance>();
     [SerializeField] private float bookOffset = 0.002f;
@@ -32,21 +29,8 @@ public class S_PickDrop : MonoBehaviour
     public event Action<SO_Book> onBookChanged; // EVENT if we change the book in hand!
 
     
-    void Awake()
-    {
-        pickUpMask = LayerMask.GetMask("PickUps");
-    }
     private void Update()
     {
-        if (S_PlayerInputActions.instance.inputs.Player.Interact.WasPressedThisFrame()) // player presses E
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, maxDistance, pickUpMask))
-            {
-                Debug.Log("Did Hit");
-                if(booksInHand.Count < carryBookCapacity) PickUpBook(hit.collider.gameObject.GetComponent<S_BookInstance>()); // if he has less than the carry capacity, we pick it up
-            }
-        }
         if (S_PlayerInputActions.instance.inputs.Player.Drop.WasPressedThisFrame())
         {
             if(!booksInHand.Count.Equals(0)) // if list is not empty (he has a book minimum in hand)
@@ -56,10 +40,13 @@ public class S_PickDrop : MonoBehaviour
         }
 
     }
-    void PickUpBook(S_BookInstance book)
+    public void PickUpBook(S_BookInstance book)
     {
+        if (booksInHand.Count >= carryBookCapacity) return;
+
+        Debug.Log("picking up");
         book.GetComponent<Rigidbody>().isKinematic = true; // disable collisions and collider
-        book.GetComponent<Collider>().enabled = false;
+        book.GetComponent<BoxCollider>().enabled = false;
         book.transform.SetParent(handPosition); // set parent and position (hand)
 
         book.transform.localPosition = Vector3.up * (booksInHand.Count * bookOffset);
@@ -69,12 +56,11 @@ public class S_PickDrop : MonoBehaviour
         UpdateTopBook();
     }
 
-
     void DropBook(S_BookInstance book)
     {
         Debug.Log("Detaching Book: " + book);
         book.GetComponent<Rigidbody>().isKinematic = false; // enable collisions and collider
-        book.GetComponent<Collider>().enabled = true;
+        book.GetComponent<BoxCollider>().enabled = true;
         book.transform.parent = null; // un-parent
 
         UpdateTopBook();

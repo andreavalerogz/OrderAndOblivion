@@ -759,6 +759,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "WorkBench",
+            "id": "4fae28f3-4283-4a7c-acfd-c39bc6660f52",
+            "actions": [
+                {
+                    "name": "Exit",
+                    "type": "Button",
+                    "id": "5539e6b0-8ba5-4e7d-a53d-9ab5f44dde37",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "88159bd5-39bb-4246-98af-178ff7120370",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
