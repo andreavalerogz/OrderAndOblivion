@@ -66,13 +66,24 @@ public class S_PickDrop : MonoBehaviour
         UpdateTopBook();
     }
 
-    void UpdateTopBook()
+    public void UpdateTopBook()
     {
         if (booksInHand.Count > 0) topBookData = booksInHand.Peek().bookData; // if he has a book -> we save the bookdata
         else topBookData = null; // if he does not -> we save it as null
 
-        if (onBookChanged != null) onBookChanged(topBookData); // we call the event and we send the bookdata (if theres something subscribed to it)
+        onBookChanged(topBookData); // we call the event and we send the bookdata (if theres something subscribed to it)
     }
 
+    public S_BookInstance getTopBook()
+    {
+        if(booksInHand.Count != 0) return booksInHand.Peek();
+        return null;
+    }
+
+    public void removeTopBook()
+    {
+        booksInHand.Pop();
+        UpdateTopBook();
+    }
 }
 

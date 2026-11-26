@@ -10,7 +10,7 @@ public class S_BookRowGenerator : MonoBehaviour
     [SerializeField] private float shelveMargin = 0.05f;
     [SerializeField] private Vector3 rowDirection = Vector3.right;
     [SerializeField] private GameObject emptyRow;
-
+    [SerializeField] private Quaternion bookRotation = Quaternion.identity; 
     [ContextMenu("Generar Fila")]
     public void GenerarFila()
     {
@@ -22,7 +22,7 @@ public class S_BookRowGenerator : MonoBehaviour
             // Coordenadas estrictamente locales respecto al generador
             float distancia = shelveMargin + (i * marginOffset);
             newEmptyRow.transform.localPosition = rowDirection * distancia;
-            newEmptyRow.transform.localRotation = Quaternion.identity;
+            newEmptyRow.transform.localRotation = bookRotation;
             newEmptyRow.transform.localScale = emptyRow.transform.localScale;
         }
     }
