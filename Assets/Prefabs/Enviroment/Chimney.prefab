@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 5815713357405750556}
   - component: {fileID: 5951640318462731777}
   - component: {fileID: 6383681593420679293}
-  m_Layer: 0
+  - component: {fileID: 5592200171884750537}
+  m_Layer: 6
   m_Name: Chimney
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,3 +113,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5592200171884750537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906123142950799225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc2e470400608a443b8bbd68c9eb317b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_Chimney

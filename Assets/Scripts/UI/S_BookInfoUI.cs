@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class S_BookInfoUI : MonoBehaviour
 {
-    // pickdrop script
-    [SerializeField] private S_PickDrop pickdropScript;
     [SerializeField] private GameObject bookInfoPanel;
 
     // texts
@@ -14,13 +12,13 @@ public class S_BookInfoUI : MonoBehaviour
     // EVENT onChanges
     void OnEnable()
     {
-        pickdropScript.onBookChanged += updateBookInfo;     // subscribe
-        updateBookInfo(pickdropScript.topBookData); // we update the UI with the TOP book we saved on topbookdata
+        S_BookManager.instance.onBookChanged += updateBookInfo;     // subscribe
+        updateBookInfo(S_BookManager.instance.topBookData); // we update the UI with the TOP book we saved on topbookdata
     }
 
     void OnDisable()
     {
-        pickdropScript.onBookChanged -= updateBookInfo; // un-suscribe
+        S_BookManager.instance.onBookChanged -= updateBookInfo; // un-suscribe
     }
 
     public void showBookInfo()
@@ -35,7 +33,10 @@ public class S_BookInfoUI : MonoBehaviour
 
     public void updateBookInfo(SO_Book book)
     {
-        if (book == null) { hideBookInfo(); return; }
+        if (book == null) { 
+            hideBookInfo(); 
+            return; 
+        }
 
         bookTitle.text = book.title;
         bookGenre.text = book.genre.ToString();

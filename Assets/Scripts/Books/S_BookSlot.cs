@@ -39,25 +39,25 @@ public class S_BookSlot : MonoBehaviour, I_Interact
 
     public void Interact(GameObject player)
     {
-        S_PickDrop PickDropScript = player.GetComponent<S_PickDrop>();
+        S_PickDrop PickDropSC = player.GetComponent<S_PickDrop>();
 
         if (isFree)
         {
             Debug.Log("placing book");
-            S_BookInstance topBook = PickDropScript.getTopBook();
+            S_BookInstance topBook = S_BookManager.instance.getTopBook();
             if (topBook != null)
             {
                 bool isBookPlaced = tryToPlace(topBook);
                 if (isBookPlaced)
                 {
                     Debug.Log("book placed");
-                    PickDropScript.removeTopBook();
+                    S_BookManager.instance.removeTopBook();
                 }
             }
         }
         else
         {
-            PickDropScript.PickUpBook(takeBookOff());
+            PickDropSC.PickUpBook(takeBookOff());
         }
     }
 
